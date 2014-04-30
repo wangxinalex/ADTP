@@ -1,13 +1,34 @@
 \documentclass[twocolumn]{article}
+\usepackage{amsmath}
 \usepackage{epsfig}
 \usepackage{psfig}
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{times}
+\usepackage{listings}
+\usepackage{multirow}
 \usepackage[colorlinks,linkcolor=red,anchorcolor=blue,citecolor=green]{hyperref}
 \setlength{\columnsep}{22pt}
+\newcommand{\MLR}{Multiple Linear Regression}
+\newcommand{\mlr}{multiple linear regression}
+\newcommand{\Mlr}{Multiple linear regression}
+\lstdefinestyle{rlanguage}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=R,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  numbers=left,
+  numbersep=4pt,
+  keywordstyle=\bfseries\color{red},
+  commentstyle=\itshape\color{gray},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
 \begin{document}
-
+\lstset{escapechar=@,style=rlanguage}
 \title{Linear Regression Analysis of Bike Sharing System }
 
 \author{Wang Xin\\ \vspace{0.5cm}\\
@@ -18,14 +39,16 @@
 \begin{abstract}
 In this report, we describe a brief process of multiple linear regression for a bike sharing system. We exploit the R language to estimate a linear model of bike sharing counts to multiple predictors and detailed analyses will be given in this report.
 The final model suggests a significant relationship between bike sharing counts and predictors given in the input data file like whether conditions and workdays. It is also noteworthy that the resultant model is not the unique answer since the relationship among predictors and outcomes could be explained in more than one mathematical expressions.
-\end{abstract} 
+\end{abstract}
 
 \input{introduction}
 
 \input{technique}
 
 \input{database}
+
 \input{outcome}
+
 \input{model}
 
 \appendix

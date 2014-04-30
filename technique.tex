@@ -1,2 +1,57 @@
 \section{Analysis of Techniques}
 \label{sec:technique}
+\subsection{Introduction to Linear Regression}
+In this project, we will use \emph{Multiple Linear Regression} to provide a model that predicts bike rentals, based on given values pf the specified predictors.
+
+Simple Linear Regression is a common method for predicting a quantitative response Y based on the predictor variable X. We usually assume that there is an approximatively linear relation between X and Y, which could be expressed as Equation~\ref{equ:simple}
+\begin{equation}\label{equ:simple}
+  Y \approx \beta_0+\beta_1X
+\end{equation}
+In this equation $\beta_0$ is the intercept and $\beta_1$ is the slope. Both $\beta_0$ and $\beta_1$ are the \emph{coefficients} or \emph{parameters} of the model.
+Once we have used the training data to calculate the parameter $\beta_0$ and $\beta_1$, we can predict the future response by calculating: $\hat{y} = \hat{\beta_0} + \hat{\beta_1}x$, where $\hat{y}$ is a prediction of Y based on a predictor value X = x. $\hat{\beta}$ is an estimated value for an unknown parameter, likewise, $\hat{y}$ is a predicted response.
+
+The case of one explanatory variable is called simple linear regression. For more than one explanatory variable, the process is called \mlr. In this report, there are more than ten predictors possibly related to the final response, thus we should apply {\mlr} to construct the model.
+
+{\Mlr} is an extension of the simple linear regression model. A typical expression of {\mlr} containing \textit{p} predictors is shown as Equation~\ref{equ:mlr}.
+\begin{equation}\label{equ:mlr}
+  Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_pX_p + \epsilon
+\end{equation}
+In this equation $X_j$ represents the $j^{th}$ predictor and $\beta_j$ is the association between the $j^{th}$ variable and the response. It indicates the average effect on Y of a one unit increase on $X_j$, holding all other predictors fixed.
+
+We use a least square approach to estimate the regression coefficients and this means we have to minimize the \emph{Residual Sum of Square (RSS)}, which is calculated by Equation~\ref{equ:rss}.
+
+\begin{multline}
+\label{equ:rss}
+  RSS = \sum_{i = 1}^{n}{e_i^2} = \sum_{i = 1}^{n}{(y_i - \hat{y}_i)}\\
+   = \sum_{i = 1}^{n}{(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{i1} - \hat{\beta}_1x_{i2} - ... - \hat{\beta}_px_{ip})^2}
+\end{multline}
+
+Generally speaking, there are four issues to consider when adopting the {\mlr}.
+\begin{itemize}
+  \item \textbf{Relationship between Response and Predictors}. Like in simple linear regression, we perform the hypothesis test by computing the F-statistic as shown in Equation~\ref{equ:ftest}.
+      \begin{multline}\label{equ:ftest}
+        F = \frac{(TSS - RSS)/p}{RSS/(n - p - 1)}\\
+        \text{TSS = Total Sum of Squares = $\sum{(y_i - \bar{y})^2}$}\\
+        \text{RSS = Residual Sum of Squares = $\sum{(y_i - \hat{y_i})^2}$}
+      \end{multline}
+      If the null hypothesis is true (no relationship between response and predictors), F-statistics $\approx$ 1. Otherwise if the alternative hypothesis is true, F-statistic $\gg$ 1.
+  \item \textbf{Deciding on Important Variables}. Best way would be to try out all models with all possible combinations of predictors (all subsets regression). we could decide which combination is best through adjusted $R^2$ or residual plots. There are three practical methods for feature selection: \emph{Forward Selection}, \emph{Backward Selection} and \emph{Mixed Selection}.
+  \item \textbf{Model Fit}. We have seen two good measures: RSE and $R^2$; They are both important to judge how well the model fits the data.
+  \item \textbf{Predictions}. In {\mlr}, the coefficients $\hat{\beta_0}, \hat{\beta_1},...,\hat{\beta_p}$ are used to define the \emph{least squares plane} as in the following equation:
+      \begin{equation}\label{equ:plane}
+        \hat{Y} = \hat{\beta_0} = \hat{\beta_1}X_1 + ... + \hat{\beta_p}X_p
+      \end{equation}
+      In order to understand how certain our estimation is, we can establish a \emph{Confidence Interval}, which tells us the average value of response for chosen values of X. Moreover, in order to answer where a single new observation will fall, we can establish the \emph{Prediction Interval}, which captures a single new random observation, rather than the average observation. It will always be wider than the confidence interval.
+\end{itemize}
+
+\subsection{Strengths and Weaknesses}
+
+{\MLR} is a simple but effective method to depict the linear relationship between predictors and responses. R language facilitates us to generate a detailed summary about the regression. From the summary we could understand more about the quality of our estimation.
+
+However, there are also some noteworthy weaknesses about {\mlr}, which lower the precision of linear model .
+\begin{itemize}
+  \item \textbf{Qualitative Predictors}. Not all predictors in a linear model are \emph{quantitative}, often some predictors will be \emph{qualitative}. We could create dummy variables to depict the qualitative predictors. For qualitative predictors with more than two levels, we could add the number of dummy variables to represent difference levels.
+  \item \textbf{Non-linear Relationships between Predictors}. When applying linear regression, we make two very important restrictive assumptions: the relationship between the predictors and response is \emph{additive} and \emph{linear}.
+      But in some cases, the true relationship between the response and the predictors may be non-linear. Here we present a very simple way to directly extend the linear model to accommodate non-linear relationships, using \emph{polynomial regression}.
+  \item \textbf{Outliers}. An outlier is a point with an unusual response value. Outliers can occur for a variety of reasons: faulty sample, error during data collection, etc.
+\end{itemize}

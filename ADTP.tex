@@ -7,7 +7,10 @@
 \usepackage{times}
 \usepackage{listings}
 \usepackage{multirow}
+\usepackage{color}
 \usepackage[colorlinks,linkcolor=red,anchorcolor=blue,citecolor=green]{hyperref}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+
 \setlength{\columnsep}{22pt}
 \newcommand{\MLR}{Multiple Linear Regression}
 \newcommand{\mlr}{multiple linear regression}
@@ -15,20 +18,36 @@
 \lstdefinestyle{rlanguage}{
   belowcaptionskip=1\baselineskip,
   breaklines=true,
-  frame=L,
+  frame=single,
   xleftmargin=\parindent,
   language=R,
   showstringspaces=false,
-  basicstyle=\footnotesize\ttfamily,
+  basicstyle=\footnotesize\ttfamily\scriptsize,
   numbers=left,
   numbersep=4pt,
   keywordstyle=\bfseries\color{red},
-  commentstyle=\itshape\color{gray},
+  commentstyle=\itshape\color{mygray},
   identifierstyle=\color{blue},
-  stringstyle=\color{orange},
+  stringstyle=\color{green},
+}
+
+\lstdefinestyle{planguage}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=single,
+  xleftmargin=\parindent,
+  language=python,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily\scriptsize,
+  numbers=left,
+  numbersep=4pt,
+  keywordstyle=\bfseries\color{red},
+  commentstyle=\itshape\color{mygray},
+  identifierstyle=\color{blue},
+  stringstyle=\color{green},
 }
 \begin{document}
-\lstset{escapechar=@,style=rlanguage}
+%\lstset{escapechar=@,style=rlanguage}
 \title{Linear Regression Analysis of Bike Sharing System }
 
 \author{Wang Xin\\ \vspace{0.5cm}\\

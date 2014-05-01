@@ -1,4 +1,56 @@
 \section{Analysis of Outcomes}
-\label{sec:outcome} 
+\label{sec:outcome}
 \subsection{Data Manipulation}
-\subsection{Graphs and Tables}
+\subsubsection{Preprocessing}
+Before we get down to read all data into our workbench in R, we need to preprocess the file format so as to delete some redundant data and adjust the format of some fields. Generally, out preprocessing includes the following steps:
+\begin{itemize}
+  \item \textbf{Delete Redundant Data}. For instances, the field \texttt{instant} in  Table~\ref{tab:fields} only records the indexes of data entries, which should be eliminated from the data manipulation.
+  \item \textbf{Format Transformation}. The data format of some fields should be transformed, especially some \emph{qualitative} fields such as \texttt{weathersit} and \texttt{holiday}, so that R language could recognize them as qualitative variables and create dummy variables. 
+\end{itemize}
+
+We use a simple python script to preprocess the input file, which is provided in Section~\ref{apd:pre} in appendix. After preprocessing, there are totally 15 variables left in the model, the deleted ones are labeled as {\color{red}red} and the transformed ones are labeled as {\color{green}green} in Table~\ref{tab:fields}.
+
+\subsubsection{Fit all Linear Variables}
+
+In the remaining 15 variables, we first fit all predictors in linear form and the response is \texttt{cnt}:
+\begin{lstlisting}[style=rlanguage]
+>lm.fit_all = lm(cnt~.-registered-casual,data=bicycle)
+>summary{lm.fit_all}
+
+Call:
+lm(formula = cnt ~ . - registered - casual, data = bicycle)
+
+Residuals:
+    Min      1Q  Median      3Q     Max
+-396.57  -60.52   -7.94   51.34  440.09
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)
+(Intercept)    -50.9441     8.9203  -5.711 1.14e-08 ***
+seasonSpring   -32.0083     5.7453  -5.571 2.57e-08 ***
+seasonSummer     6.2138     4.9737   1.249  0.21156
+seasonWinter    35.9871     5.1574   6.978 3.11e-12 ***
+.....
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 101.7 on 17330 degrees of freedom
+Multiple R-squared:  0.6863,	Adjusted R-squared:  0.6855
+F-statistic:   790 on 48 and 17330 DF,  p-value: < 2.2e-16
+\end{lstlisting}
+From the summary we could see that R language has calculated the slope and intercept for all input linear predictors, besides, it also creates dummy variables for qualitative predictors like \texttt{seasonSpring}, \texttt{seasonSummer}. For detailed information about dummy variables, we can use \texttt{Contrasts} function.
+
+\begin{lstlisting}[style=rlanguage]
+> contrasts(season)
+       Spring Summer Winter
+Autumn      0      0      0
+Spring      1      0      0
+Summer      0      1      0
+Winter      0      0      1
+\end{lstlisting}
+
+The result shows that $F-statistic = 729.1$ and $p-value < 2.2e-16$ thus there \textbf{is} a relationship between the predictors and the response \texttt{cnt}. 
+
+
+
+\subsection{Graphs and Tables} 
